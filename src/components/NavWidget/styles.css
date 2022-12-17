@@ -1,0 +1,11 @@
+
+
+.cart {
+    width: 2.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: #fff;
+}
+.cart:hover {
+    color: aqua;
+ }
