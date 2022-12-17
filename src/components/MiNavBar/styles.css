@@ -6,6 +6,7 @@
     text-decoration: none;
     color: aqua;
     cursor: pointer;
+    transition: all 300ms
 }
 
 .logo:hover{
@@ -18,10 +19,8 @@
     transition: all 300ms;
 }
 
-.item:hover{
-   
+.item:hover{   
     color: aqua;
-    
 }
 
 @media (max-width:1268px) {
