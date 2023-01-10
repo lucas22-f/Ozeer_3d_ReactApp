@@ -10,7 +10,7 @@ function ItemDetailContainer() {
     useEffect(()=>{
         fetch(url).then(res=> res.json()).then(data => setProduct(data));
 
-    },[params.detailId])
+    },[params.detailId,url])
 
 
 
@@ -18,7 +18,7 @@ function ItemDetailContainer() {
     
     <div className="cols-12 bg-dark text-ligth m-3 rounded">
     <div className="row justify-content-evenly">
-    <img className="col-md-4 card-image-top p-5" src={product.image} alt="Card image cap"></img>
+    <img className="col-md-4 card-image-top p-5" src={product.image} alt="Captura xd"></img>
 
     <div className="col-md-4 mt-5 p-4">
       <h5 className="card-title">{product.title}</h5>

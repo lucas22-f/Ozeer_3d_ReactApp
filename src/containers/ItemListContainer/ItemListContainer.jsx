@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import Item from '../../components/Item/Item';
+import SubNavbar from '../../components/SubNavbar/SubNavbar';
 import './styles.css'
+
 function ItemListContainer() {
 
 
@@ -33,8 +35,7 @@ function ItemListContainer() {
 
   return (
     <>
-      <h1 className='container-fluid text-center mt-3 p-3'></h1>
-      
+      <SubNavbar></SubNavbar>
       <div className="container-fluid">
         <div className='row justify-content-center'>
           {data.map((produc => {

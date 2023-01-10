@@ -4,12 +4,14 @@ import ItemListContainer from './containers/ItemListContainer/ItemListContainer'
 import { BrowserRouter,Routes,Route } from 'react-router-dom';
 import ItemDetailContainer from './containers/ItemDetailContainer/ItemDetailContainer';
 
+
 function App() {
   return (
     
    <>
    <BrowserRouter>
    <NavBar></NavBar>
+   
       <Routes>
 
       <Route path='/' element={<ItemListContainer></ItemListContainer>}></Route>
