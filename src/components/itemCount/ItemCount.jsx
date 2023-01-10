@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./styles.css";
-function ItemCount({stock,initial,onAdd}) {
+function ItemCount({stock,initial,onAdd,title}) {
 
 
 
@@ -19,9 +19,10 @@ function ItemCount({stock,initial,onAdd}) {
 
 
   return (
-    <div className="col-6 col-md-2 p-3 mx-3 miCard">
-      <p>Titulo</p>
-      <div className="control ">
+    <div className="miCard p-3 rounded">
+      <p>{title}</p>
+      <div className="control">
+        
         <div onClick={onAdd} className="sum">+</div>
         <div className="count">{count}</div>
         <div onClick={onAdd} className="res">-</div>
