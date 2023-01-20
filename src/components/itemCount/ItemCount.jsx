@@ -5,7 +5,7 @@ function ItemCount({stock,initial,onAdd,title}) {
 
 
   const [count, setCount] = useState(initial);
-  onAdd = (e) => {
+  const onActive = (e) => {
   
     if (e.target.innerHTML==='+' && count >= initial && count < stock) {
       setCount(count + 1);
@@ -23,12 +23,12 @@ function ItemCount({stock,initial,onAdd,title}) {
       <p>{title}</p>
       <div className="control">
         
-        <div onClick={onAdd} className="sum">+</div>
+        <div onClick={onActive} className="sum">+</div>
         <div className="count">{count}</div>
-        <div onClick={onAdd} className="res">-</div>
+        <div onClick={onActive} className="res">-</div>
       </div>
 
-      <button className="add mt-3">Agregar al carrito</button>
+      <button onClick={()=> onAdd(count)} className="add mt-3">Comprar</button>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ItemList from "../../components/ItemList/ItemList";
+import Loading from "../../components/Loading/Loading";
 import SubNavbar from "../../components/SubNavbar/SubNavbar";
 import "./styles.css";
 
@@ -32,7 +33,7 @@ function ItemListContainer() {
     <>
       <SubNavbar></SubNavbar>
       <div className="container-fluid">
-        <ItemList data={data}></ItemList>
+        {Object.keys(data).length===0 ? <Loading></Loading> : <ItemList data={data}></ItemList> }
       </div>
     </>
   );
