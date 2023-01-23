@@ -28,7 +28,7 @@ function NavBar() {
         </ul>
 
 
-        <NavWidget></NavWidget>
+        <Link to={"/cart"} className="cart"><NavWidget></NavWidget></Link>
 
       </div>
     </div>

@@ -2,16 +2,24 @@
 import { useState } from 'react'
 import ItemCount from '../itemCount/ItemCount'
 import { Link } from 'react-router-dom';
+import { Shop } from '../../context/CartProvider';
+import { useContext } from 'react';
+
+
+
+
 function ItemDetail({data}) {
-    
- const [cantValue,setCantValue] = useState(0);
+  const {addProduct} = useContext(Shop);
  const [countChange,setcountChange] = useState(true);
+
   const onAdd = (count) =>{
-    setCantValue(count)
+
+ 
    setcountChange(false);
+   addProduct({...data, cantidad : count});
+   
   }
 
-  console.log(cantValue)
 
 
   return (

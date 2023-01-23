@@ -1,10 +1,11 @@
 
-
 .cart {
-    width: 2.5rem;
+    width: 3.5rem;
+    display: flex;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.4s;
     color: #fff;
+    text-decoration: none;
 }
 .cart:hover {
     color: aqua;
