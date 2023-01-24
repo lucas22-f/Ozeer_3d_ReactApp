@@ -2,28 +2,50 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import ItemDetail from '../../components/ItemDetail/ItemDetail';
 import Loading from '../../components/Loading/Loading';
+import { doc, getDoc } from "firebase/firestore";
+import { db } from '../../firebase/config';
 function ItemDetailContainer() {
 
-    const [product,setProduct] = useState({});
-    const params = useParams()
+  const [product, setProduct] = useState({});
+  const params = useParams()
 
-    const url = `https://fakestoreapi.com/products/${params.detailId}`
-    useEffect(()=>{
-        fetch(url).then(res=> res.json()).then(data => setProduct(data));
+  useEffect(() => {
 
-    },[params.detailId,url])
 
-      const x = Object.keys(product)
-//eventos declarados en JSX son eventos sinteticos 
+    const getProduct = async () => {
+      const docRef = doc(db, "products", params.detailId);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const producDetail = {
+          id: docSnap.id,
+          ...docSnap.data()
+        }
+        setProduct(producDetail);
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+
+    }
+
+    getProduct();
+
+    /* fetch(url).then(res=> res.json()).then(data => setProduct(data)); */
+
+  }, [params.detailId])
+
+  const x = Object.keys(product)
+  //eventos declarados en JSX son eventos sinteticos 
   return (
-    
+
     <>
 
-      {x.length === 0 ? <Loading></Loading>  : <ItemDetail data={product}></ItemDetail> } 
+      {x.length === 0 ? <Loading></Loading> : <ItemDetail data={product}></ItemDetail>}
 
     </>
-      
-    
+
+
   )
 }
 
