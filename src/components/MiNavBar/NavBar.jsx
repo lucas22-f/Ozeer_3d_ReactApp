@@ -18,13 +18,7 @@ function NavBar() {
           <li className="item">
           <Link className="item"  to={"/"}>Inicio</Link>
           </li>
-          <li className="item" >
-          <Link className="item"  to={"/"}>Productos</Link>
-          </li>
-
-          <li className="item">
-            <Link className="item"  to={"/"}>Inicio</Link>
-          </li>
+          
         </ul>
 
 
