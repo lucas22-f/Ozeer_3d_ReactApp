@@ -2,7 +2,6 @@
 
 Este proyecto esta creado con React [Create React App](https://github.com/facebook/create-react-app).
 
-
 ### Herramientas que use:
 
 * Boostrap para manejo de estilos
