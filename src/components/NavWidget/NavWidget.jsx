@@ -7,7 +7,7 @@ import './styles.css'
 import { Shop } from '../../context/CartProvider'
 
 function NavWidget() {
-
+   // componente que muestra el carrito para acceder en todo lugar
   //consumir el context
   const { countCart } = useContext(Shop)
 

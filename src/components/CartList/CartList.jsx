@@ -4,7 +4,7 @@ import { Shop } from '../../context/CartProvider'
 import CheckOut from '../CheckOut/CheckOut';
  
 function CartList({total}) {
-
+  //renderizamos el carrito con una tabla
     const {products,removeProduct,removeAll} = useContext(Shop);
     const [confirmed,setConfirmed] = useState(false);
 

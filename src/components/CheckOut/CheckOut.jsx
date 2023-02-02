@@ -7,7 +7,7 @@ import LoadingV2 from '../LoadingV2/LoadingV2';
 import { doc, updateDoc } from "firebase/firestore";
 import OrderData from '../ModalEndCart/OrderData';
 
-
+//Componente que realiza la finalizacion de la compra
 function CheckOut({ products, total, removeAll }) {
 
   //estado para definir el loader

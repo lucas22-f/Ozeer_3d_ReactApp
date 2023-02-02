@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./styles.css";
 function ItemCount({stock,initial,onAdd,title}) {
 
-
+//componente que muestra controladora de cantidad para agregar al cart
 
   const [count, setCount] = useState(initial);
   const onActive = (e) => {

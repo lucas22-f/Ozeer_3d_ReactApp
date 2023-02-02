@@ -7,7 +7,7 @@ import { useContext } from 'react';
 
 
 
-
+//componente que muestra el interior de una card
 function ItemDetail({data}) {
   const {addProduct} = useContext(Shop);
  const [countChange,setcountChange] = useState(true);

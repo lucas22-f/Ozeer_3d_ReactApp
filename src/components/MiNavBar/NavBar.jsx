@@ -2,7 +2,10 @@ import React from 'react'
 import './styles.css'
 import NavWidget from '../NavWidget/NavWidget';
 import { Link } from 'react-router-dom';
+
 function NavBar() {
+
+  //navbar para navegacion de la landing
   return (
     <nav className="navbar navbar-dark navbar-expand-lg bg-dark">
     <div className="container-fluid">
@@ -18,7 +21,7 @@ function NavBar() {
           <li className="item">
           <Link className="item"  to={"/"}>Inicio</Link>
           </li>
-          
+
         </ul>
 
 

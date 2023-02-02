@@ -5,7 +5,7 @@ function OrderData({removeAll,data,datosF}) {
   console.log(data)
 
   return (
-
+    //Componente que muestra los datos de la orden
         <>
 
             <div className='border rounded my-5'>
