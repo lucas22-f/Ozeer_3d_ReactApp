@@ -4,67 +4,172 @@ import { useState } from 'react'
 import { collection, addDoc } from "firebase/firestore";
 import { db } from '../../firebase/config';
 import LoadingV2 from '../LoadingV2/LoadingV2';
+import { doc, updateDoc } from "firebase/firestore";
+import OrderData from '../ModalEndCart/OrderData';
+
 
 function CheckOut({ products, total, removeAll }) {
 
+  //estado para definir el loader
+  const [loader, setLoader] = useState(false);
+  const [orderOk, setOrderOk] = useState(false);
+  const [envio,setEnvio] = useState(true);
+  const [data,setData] = useState({});
+  //estado para capturar los datos del formulario
   const [datosF, setDatosF] = useState({
     nombre: '',
     apellido: '',
     email: '',
+    email2: '',
     telefono: ''
   })
-  const [loader, setLoader] = useState(false);
+
+  //estado para validar errores en el formulario
+  const [errors, setErrors] = useState({
+    nombre: '',
+    apellido: '',
+    email: '',
+    email2: '',
+    telefono: ''
+  })
+
   const handleInputChange = (e) => {
     setDatosF({
       ...datosF,
       [e.target.name]: e.target.value
     })
-  }
 
-  const enviarDatos = async (e) => {
-    e.preventDefault()
-    try {
-      setLoader(true)
-      const order = generateOrder({
-        nombre: datosF.nombre,
-        email: datosF.email,
-        telefono: datosF.telefono,
-        cart: products,
-        total: total
-      })
-      // Add a new document with a generated id.
-      const docRef = await addDoc(collection(db, "orders"), order);
-      alert("Document written with ID: "+ docRef.id);
-      removeAll();
-   
+    setErrors({
+      ...errors,
+      [e.target.name]: ""
+    });
 
+  };
 
-    } catch (error) {
-      console.log(error)
-    } finally{
-      setLoader(false)
+  const validateForm = () => {
+    let newErrors = {};
+    if (!datosF.nombre) {
+      newErrors.nombre = "Nombre es requerido";
+    }
+
+    if (!datosF.apellido) {
+      newErrors.apellido = "Apellido es requerido";
+    }
+
+    if (!datosF.email) {
+      newErrors.email = "Email es requerido";
+
+    } else if (!/\S+@\S+\.\S+/.test(datosF.email)) {
+      newErrors.email = "Email no es valido";
+    }
+
+    if (!datosF.email2) {
+      newErrors.email2 = "Confirmar email es requerido";
+
+    } else if (datosF.email !== datosF.email2) {
+      newErrors.email2 = "Emails no coinciden";
+
+    }
+
+    if (!datosF.telefono) {
+      newErrors.telefono = "Telefono es requerido"
+    } else if (!/^\d{2} \d{4} \d{4}$/.test(datosF.telefono)) {
+      newErrors.telefono = "telefono es invalido"
     }
 
 
+    setErrors(newErrors);
+
+
+    //aca retornamos un boolean que dice si En cada campo del objeto de erroes esta vacio ("")
+    //osea que no hay errores, retorna true
+    // si hay algun campo lleno (Hay errores) retorna false
+
+    return Object.values(newErrors).every((error) => error === "");
+  };
+
+
+
+  const enviarDatos = async (e) => {
+    e.preventDefault()
+
+    try {
+      if (validateForm()) {
+
+        setLoader(true)
+
+        const order = generateOrder({
+          nombre: datosF.nombre,
+          email: datosF.email,
+          telefono: datosF.telefono,
+          cart: products,
+          total: total
+        })
+
+        // Generamos orden y la guardamos en firebase...
+        const docRef = await addDoc(collection(db, "orders"), order);
+        setOrderOk(true)
+        console.log(docRef);
+        setData(docRef);
+        setEnvio(false)
+        
+
+        // Actualizamos Los campos afectados x el stock en firebase... producto x producto.
+        for (const productCart of products) {
+          const productRef = doc(db, "products", productCart.id);
+
+          await updateDoc(productRef, {
+            stock: productCart.stock - productCart.cantidad
+          });
+        }
+
+      }
+
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoader(false)
+    }
 
   }
 
   return (
-    <form className='d-grid gap-3 text-ligth m-5 p-3' style={{ "width": 500 }} onSubmit={enviarDatos}>
+    <form className='container gap-2 text-ligth m-5 p-3' onSubmit={enviarDatos}>
+      <div className="row col-4 gap-3">
+          <label htmlFor="nombre">Nombre:</label>
+          <input className='p-2' type="text" name='nombre' onChange={handleInputChange} value={datosF.nombre} />
+          {errors.nombre && <p className='text-danger'>{errors.nombre}</p>}
 
-      <label htmlFor="nombre">Nombre:</label>
-      <input className='p-2' type="text" name='nombre' onChange={handleInputChange} />
+          <label htmlFor="apellido">Apellido:</label>
+          <input className='p-2' type="text" name='apellido' onChange={handleInputChange} value={datosF.apellido} />
+          {errors.apellido && <p className='text-danger'>{errors.apellido}</p>}
 
-      <label htmlFor="apellido">Apellido:</label>
-      <input className='p-2' type="text" name='apellido' onChange={handleInputChange} />
+          <label htmlFor="email">Email:</label>
+          <input className='p-2' type="text" name='email' onChange={handleInputChange} value={datosF.email} />
+          {errors.email && <p className='text-danger'>{errors.email}</p>}
 
-      <label htmlFor="email">Email:</label>
-      <input className='p-2' type="email" name='email' onChange={handleInputChange} />
 
-      <label htmlFor="telefono">Telefono:</label>
-      <input className='p-2' type="text" name='telefono' onChange={handleInputChange} />
-      {loader ? <LoadingV2></LoadingV2>
-        : <button type="submit" className="btn btn-primary" >Enviar</button>
+          <label htmlFor="email2">Confirmar Email:</label>
+          <input className='p-2' type="text" name='email2' onChange={handleInputChange} value={datosF.email2} />
+          {errors.email2 && <p className='text-danger'>{errors.email2}</p>}
+
+          <label htmlFor="telefono">Telefono: ej: "11 1234 5678" </label>
+          <input className='p-2' type="text" name='telefono' onChange={handleInputChange} value={datosF.telefono} />
+          {errors.telefono && <p className='text-danger'>{errors.telefono}</p>}
+            {envio && <button type="submit" className="btn btn-primary mt-4">Enviar</button>}
+      </div>
+      
+
+      {
+
+        loader 
+
+        ? <LoadingV2></LoadingV2>
+
+        : <>
+           
+            { orderOk && <OrderData removeAll={removeAll} data={data} datosF={datosF}></OrderData>}
+          </>
 
       }
 

@@ -42,7 +42,7 @@ function CartList({total}) {
     </table>
     <div className='btn btn-danger m-3' onClick={()=> removeAll()}>Eliminar todo</div>
     <div className='btn btn-info m-3'  onClick={()=>  confirmOrder()}>Confirmar Compra</div>
-    <div className=''>TOTAL DEL CARRITO : {total}</div>
+    <div className='m-3 bg-dark rounded p-2' style={{"fontSize":"2rem","width":"300px"}}>Total Carrito: ${total}</div>
 
           {confirmed && <CheckOut products={products} total={total} removeAll={removeAll} ></CheckOut>}
 

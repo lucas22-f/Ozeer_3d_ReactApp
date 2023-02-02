@@ -36,9 +36,12 @@ function ItemDetail({data}) {
 
       countChange 
 
-      ? <ItemCount onAdd={onAdd} stock={4} initial={1} title={data.title}></ItemCount>
+      ? <ItemCount onAdd={onAdd} stock={data.stock} initial={1} title={data.title}></ItemCount>
 
-      : <Link to={"/cart"} className="btn btn-info p-3 text-dark"> Terminar Compra </Link>
+      : <>
+        <Link to={"/cart"} className="btn btn-info p-3 text-dark"> Terminar Compra </Link>
+        <Link to={"/"} className="btn btn-secondary p-3 m-3 text-dark"> Regresar al menu </Link>
+        </>
       
       } 
 
