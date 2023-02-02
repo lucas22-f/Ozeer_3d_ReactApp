@@ -1,6 +1,6 @@
 import React from 'react'
-import "./style.css"
-function Loading() {
+import "./styles.css"
+function LoadingV2() {
   return (
 
     <div className="containLoader">
@@ -9,4 +9,4 @@ function Loading() {
   )
 }
 
-export default Loading
+export default LoadingV2

@@ -40,22 +40,10 @@ function CartProvider({children}) { // config del context Provider  Funciones qu
     const removeAll =()=>{
         setProducts([]);
     }
-    const calculateTotal = () =>{
-
-        if(products.length){
-          let sum = 0;
-          let cant = 0;
-          
-          products.forEach(el=>{
-             cant += el.cantidad
-            sum += el.price 
-          }) 
-           return sum * cant
-        }
-      }
+    
 
   return (
-    <Shop.Provider value = {{products, addProduct, countCart, removeProduct, removeAll , calculateTotal}}>
+    <Shop.Provider value = {{products, addProduct, countCart, removeProduct, removeAll}}>
 
         {children}
 
